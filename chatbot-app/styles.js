@@ -737,6 +737,21 @@ export const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
 
+  // Demo Mode Notice
+  demoModeNotice: {
+    backgroundColor: '#fef3c7',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#fcd34d',
+  },
+  demoModeText: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#92400e',
+    textAlign: 'center',
+  },
+
   // Dashboard Screen Styles
   dashboardContainer: {
     flex: 1,

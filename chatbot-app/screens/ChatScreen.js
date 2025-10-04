@@ -16,6 +16,7 @@ export default function ChatScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isUsingMock, setIsUsingMock] = useState(false);
   const flatListRef = useRef(null);
 
   // Hide the default navigation header
@@ -35,16 +36,6 @@ export default function ChatScreen({ navigation }) {
   const sendMessage = async () => {
     if (inputText.trim() === '') return;
 
-    // Check if API key is configured
-    if (!isApiKeyConfigured()) {
-      Alert.alert(
-        'API Key Required',
-        'Please set your ANTHROPIC_API_KEY environment variable to use the chat feature.',
-        [{ text: 'OK' }]
-      );
-      return;
-    }
-
     const userMessageText = inputText.trim();
     const userMessage = {
       id: Date.now().toString(),
@@ -58,12 +49,17 @@ export default function ChatScreen({ navigation }) {
     setIsLoading(true);
 
     try {
-      // Call Anthropic API
-      const responseText = await sendMessageToClaude(messages, userMessageText);
+      // Call Anthropic API (with automatic fallback to mock)
+      const response = await sendMessageToClaude(messages, userMessageText);
+
+      // Update mock mode state
+      if (response.isMock && !isUsingMock) {
+        setIsUsingMock(true);
+      }
 
       const aiMessage = {
         id: (Date.now() + 1).toString(),
-        text: responseText,
+        text: response.text,
         sender: 'ai',
         timestamp: new Date(),
       };
@@ -144,6 +140,15 @@ export default function ChatScreen({ navigation }) {
             </View>
           </View>
         </View>
+
+        {/* Demo Mode Notice */}
+        {isUsingMock && (
+          <View style={styles.demoModeNotice}>
+            <Text style={styles.demoModeText}>
+              🔔 Demo Mode - API key not configured
+            </Text>
+          </View>
+        )}
 
         {/* Messages Area */}
         <View style={styles.figmaChatMessagesArea}>
