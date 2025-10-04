@@ -11,7 +11,12 @@
       "Bash(npm install:*)",
       "Bash(find:*)",
       "Bash(curl:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Read(//var/folders/c5/rj7_8bf13bs4nfx67lnk1gxw0000gn/T/TemporaryItems/NSIRD_screencaptureui_gH55qr/**)",
+      "Read(//var/folders/c5/rj7_8bf13bs4nfx67lnk1gxw0000gn/T/TemporaryItems/NSIRD_screencaptureui_qZpMk2/**)",
+      "Read(//var/folders/c5/rj7_8bf13bs4nfx67lnk1gxw0000gn/T/TemporaryItems/NSIRD_screencaptureui_jW71sp/**)",
+      "Bash(uvicorn:*)",
+      "Bash(pip3 install:*)"
     ],
     "deny": [],
     "ask": []

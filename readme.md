@@ -6,6 +6,15 @@
 
 CuraLoop is an AI-powered platform augmented by a **Human-in-the-Loop** model to provide 24/7 continuous care and cognitive health monitoring for individuals with Alzheimer's disease. It acts as a digital companion, a medical assistant, and a vital data bridge connecting patients, their caregivers, and their doctors.
 
+## 🚀 Live Demo
+
+**Frontend Application:** https://chatbot-app-three-beta.vercel.app/
+
+**Backend API:** https://curaloop-backend-gdy23nv13-reatureds-projects.vercel.app
+
+- API Documentation: https://curaloop-backend-gdy23nv13-reatureds-projects.vercel.app/docs
+- Health Check: https://curaloop-backend-gdy23nv13-reatureds-projects.vercel.app/health
+
 ---
 
 ### The Problem
