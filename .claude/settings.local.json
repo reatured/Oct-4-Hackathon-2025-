@@ -16,7 +16,10 @@
       "Read(//var/folders/c5/rj7_8bf13bs4nfx67lnk1gxw0000gn/T/TemporaryItems/NSIRD_screencaptureui_qZpMk2/**)",
       "Read(//var/folders/c5/rj7_8bf13bs4nfx67lnk1gxw0000gn/T/TemporaryItems/NSIRD_screencaptureui_jW71sp/**)",
       "Bash(uvicorn:*)",
-      "Bash(pip3 install:*)"
+      "Bash(pip3 install:*)",
+      "Bash(git merge:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
