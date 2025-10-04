@@ -122,11 +122,11 @@ class AlzheimersPredictor:
             print(f"Model saved to {model_path}")
             print(f"Scaler saved to {scaler_path}")
 
-    def load_model(self, model_path='alzheimers_model.joblib', scaler_path='alzheimers_scaler.joblib'):
+    def load_model(self, model_path='alzheimers_model.joblib', scaler_path='alzheimers_scaler.joblib', feature_names_path='feature_names.joblib'):
         """Load a pre-trained model and scaler"""
         self.model = joblib.load(model_path)
         self.scaler = joblib.load(scaler_path)
-        self.feature_names = joblib.load('feature_names.joblib')
+        self.feature_names = joblib.load(feature_names_path)
         print("Model and scaler loaded successfully")
 
 def main():
