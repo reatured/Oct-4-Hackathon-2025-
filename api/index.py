@@ -14,6 +14,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 # Import only the router from analysis (not the full app)
 from app.analysis.diagnosis_treatment_planning import router as analysis_router
 from app.analysis.conversation_analyzer import router as conversation_router
+from app.doctor.review import router as doctor_router
 
 # For intake, we need to import the router without triggering app creation
 # Import the intake module's router directly
@@ -50,6 +51,7 @@ app.add_middleware(
 # Include routers
 app.include_router(analysis_router)
 app.include_router(conversation_router)
+app.include_router(doctor_router)
 app.include_router(intake_router)
 app.include_router(chat_router)
 
@@ -63,6 +65,7 @@ async def root():
         "endpoints": {
             "diagnosis_analysis": "/api/analysis",
             "conversation_analysis": "/api/conversation",
+            "doctor_review": "/api/doctor",
             "patient_intake": "/api/patient/{patient_id}/intake",
             "chatbot_initialization": "/api/patient/{patient_id}/chatbot/initialize",
             "chat_sessions": "/api/patient/{patient_id}/chat",

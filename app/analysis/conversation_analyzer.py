@@ -29,9 +29,9 @@ class ConversationAnalyzer:
         Args:
             claude_api_key: Anthropic API key for Claude. If not provided, will try to read from environment
         """
-        self.api_key = claude_api_key or os.environ.get("ANTHROPIC_API_KEY")
+        self.api_key = claude_api_key or os.environ.get("CLAUDE_API_KEY") or os.environ.get("ANTHROPIC_API_KEY")
         if not self.api_key:
-            raise ValueError("Claude API key is required. Provide it or set ANTHROPIC_API_KEY environment variable.")
+            raise ValueError("Claude API key is required. Provide it or set CLAUDE_API_KEY or ANTHROPIC_API_KEY environment variable.")
 
         self.client = anthropic.Anthropic(api_key=self.api_key)
         self.model = "claude-3-5-sonnet-20241022"  # Latest Claude model
@@ -579,7 +579,10 @@ def batch_analyze_conversations(request: BatchAnalyzeRequest):
 @router.get("/health")
 def conversation_analyzer_health():
     """Health check for conversation analyzer"""
-    api_key_configured = os.environ.get("ANTHROPIC_API_KEY") is not None
+    api_key_configured = (
+        os.environ.get("CLAUDE_API_KEY") is not None or
+        os.environ.get("ANTHROPIC_API_KEY") is not None
+    )
 
     return {
         "status": "healthy",

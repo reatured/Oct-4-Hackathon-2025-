@@ -7,10 +7,10 @@ from typing import Dict, Any, Optional
 from datetime import datetime
 import sys
 import os
-import requests
 import json
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
+import anthropic
 
 # Add ml directory to path for Alzheimer's predictor
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'ml'))
@@ -27,10 +27,14 @@ class DiagnosisTreatmentPlanner:
     Handles diagnosis analysis and treatment planning for Alzheimer's patients
     """
     
-    def __init__(self, llm_api_key: Optional[str] = None, llm_provider: str = "openai"):
+    def __init__(self, llm_api_key: Optional[str] = None, llm_provider: str = "claude"):
         self.predictor = None
-        self.llm_api_key = llm_api_key
+        self.llm_api_key = llm_api_key or os.environ.get("CLAUDE_API_KEY")
         self.llm_provider = llm_provider
+        if self.llm_api_key:
+            self.anthropic_client = anthropic.Anthropic(api_key=self.llm_api_key)
+        else:
+            self.anthropic_client = None
         self._initialize_predictor()
     
     def _initialize_predictor(self):
@@ -434,8 +438,8 @@ class DiagnosisTreatmentPlanner:
         """
         
         try:
-            if self.llm_provider == "openai":
-                return self._call_openai_api(prompt)
+            if self.llm_provider == "claude":
+                return self._call_claude_api(prompt)
             else:
                 # Add other LLM providers here
                 return None
@@ -505,8 +509,8 @@ class DiagnosisTreatmentPlanner:
         """
         
         try:
-            if self.llm_provider == "openai":
-                return self._call_openai_api(prompt)
+            if self.llm_provider == "claude":
+                return self._call_claude_api(prompt)
             else:
                 # Add other LLM providers here
                 return None
@@ -514,58 +518,43 @@ class DiagnosisTreatmentPlanner:
             print(f"LLM call failed: {e}")
             return None
     
-    def _call_openai_api(self, prompt: str) -> Optional[Dict[str, Any]]:
-        """Call OpenAI API for LLM analysis"""
-        
+    def _call_claude_api(self, prompt: str) -> Optional[Dict[str, Any]]:
+        """Call Claude API for LLM analysis"""
+
+        if not self.anthropic_client:
+            return None
+
         try:
-            headers = {
-                "Authorization": f"Bearer {self.llm_api_key}",
-                "Content-Type": "application/json"
-            }
-            
-            data = {
-                "model": "gpt-4",
-                "messages": [
-                    {
-                        "role": "system",
-                        "content": "You are a medical AI assistant specializing in Alzheimer's disease diagnosis and treatment planning. Provide accurate, evidence-based medical analysis in JSON format."
-                    },
+            system_message = "You are a medical AI assistant specializing in Alzheimer's disease diagnosis and treatment planning. Provide accurate, evidence-based medical analysis in JSON format."
+
+            message = self.anthropic_client.messages.create(
+                model="claude-3-5-sonnet-20241022",
+                max_tokens=4096,
+                temperature=0.3,
+                system=system_message,
+                messages=[
                     {
                         "role": "user",
                         "content": prompt
                     }
-                ],
-                "temperature": 0.3,
-                "max_tokens": 2000
-            }
-            
-            response = requests.post(
-                "https://api.openai.com/v1/chat/completions",
-                headers=headers,
-                json=data,
-                timeout=30
+                ]
             )
-            
-            if response.status_code == 200:
-                result = response.json()
-                content = result["choices"][0]["message"]["content"]
-                
-                # Parse JSON response
-                try:
-                    return json.loads(content)
-                except json.JSONDecodeError:
-                    # If JSON parsing fails, try to extract JSON from the response
-                    import re
-                    json_match = re.search(r'\{.*\}', content, re.DOTALL)
-                    if json_match:
-                        return json.loads(json_match.group())
-                    return None
-            else:
-                print(f"OpenAI API error: {response.status_code} - {response.text}")
+
+            content = message.content[0].text
+
+            # Parse JSON response
+            try:
+                return json.loads(content)
+            except json.JSONDecodeError:
+                # If JSON parsing fails, try to extract JSON from the response
+                import re
+                json_match = re.search(r'\{.*\}', content, re.DOTALL)
+                if json_match:
+                    return json.loads(json_match.group())
                 return None
-                
+
         except Exception as e:
-            print(f"OpenAI API call failed: {e}")
+            print(f"Claude API call failed: {e}")
             return None
     
     def _generate_structured_diagnosis_analysis(self, patient_data: Dict[str, Any], 
@@ -1103,11 +1092,13 @@ class DiagnosisTreatmentPlanner:
 # Initialize without LLM API key by default - can be configured later
 diagnosis_planner = DiagnosisTreatmentPlanner()
 
-def configure_llm(api_key: str, provider: str = "openai"):
+def configure_llm(api_key: str, provider: str = "claude"):
     """Configure LLM for the global diagnosis planner instance"""
     global diagnosis_planner
     diagnosis_planner.llm_api_key = api_key
     diagnosis_planner.llm_provider = provider
+    if provider == "claude":
+        diagnosis_planner.anthropic_client = anthropic.Anthropic(api_key=api_key)
     print(f"✓ LLM configured with provider: {provider}")
 
 # ---------- FastAPI Router for Analysis Endpoints ----------
