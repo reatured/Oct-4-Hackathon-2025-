@@ -1,7 +1,5 @@
 # CuraLoop: AI Companion for Alzheimer's Continuous Care
 
-![CuraLoop Banner](https://via.placeholder.com/900x300.png?text=CuraLoop%20-%20AI%20Continuous%20Care)
-
 > Empathy-driven, continuous AI care for Alzheimer's patients.
 
 CuraLoop is an AI-powered platform augmented by a **Human-in-the-Loop** model to provide 24/7 continuous care and cognitive health monitoring for individuals with Alzheimer's disease. It acts as a digital companion, a medical assistant, and a vital data bridge connecting patients, their caregivers, and their doctors.
