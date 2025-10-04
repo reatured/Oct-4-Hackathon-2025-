@@ -27,7 +27,7 @@ CuraLoop introduces an AI-powered daily companion that continuously tracks, pred
 
 ---
 
-### Core Features
+## Core Features
 
 *   **🗓️ Daily Check-Ins:** Establishes a consistent cognitive baseline through simple memory and orientation questions.
 *   **🎮 Gamified Cognitive Training:** AI-adaptive games designed to enhance memory, attention, and orientation while generating quantitative performance data.
@@ -36,11 +36,49 @@ CuraLoop introduces an AI-powered daily companion that continuously tracks, pred
 *   **⚕️ Human-in-the-Loop Review:** Doctors receive auto-generated risk summaries, allowing them to review AI findings, approve or modify them, and update treatment plans.
 *   **🩺 Doctor Dashboard:** A centralized dashboard that summarizes cognitive trajectories, emotional trends, and patient logs for efficient reviews.
 
-### AI + Human-in-the-Loop Workflow
+## AI + Human-in-the-Loop Workflow
 
 Our system creates a continuous feedback loop that ensures both precision and safety:
 
 **User Interaction → Data Logging → AI Analysis & Clustering → Risk Alert → Doctor/Caregiver Review → Plan Adjustment → Continuous Feedback**
 
 This process leverages AI for real-time monitoring and prediction, while human experts provide the critical oversight needed for safety, interpretability, and ethical decision-making.
+
+---
+
+## Git Repository
+
+**Fork Repository:** https://github.com/reatured/Oct-4-Hackathon-2025-
+
+**Original Repository:** https://github.com/SeattleDataAI-Hackathon/Oct-4-Hackathon-2025-
+
+## Team Details
+
+**Team Number:** 12
+
+**Team Name:** Curaloop
+
+### Team Members:
+
+1. **Yiran Ye**
+   - GitHub: [IreneYe08](https://github.com/IreneYe08)
+
+2. **Lingyi Zhou**
+   - GitHub: [reatured](https://github.com/reatured)
+
+3. **Sophie Yin**
+   - GitHub: [sophie-fc-yin](https://github.com/sophie-fc-yin)
+
+## Presentation Slides
+
+https://docs.google.com/presentation/d/1qPf1uS1MDLKFYb0oUSKL2o60Z8AA-5RfOHpdXbYuUfU/edit?usp=sharing
+
+## Technology Stack
+
+- **Frontend:** React Native (Expo)
+- **Backend:** FastAPI (Python)
+- **AI/ML:** OpenAI GPT, Custom ML models for trend analysis
+- **Deployment:** Vercel
+
+---
 

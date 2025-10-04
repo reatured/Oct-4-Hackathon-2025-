@@ -7,8 +7,10 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
 import { styles } from '../styles';
+import { sendMessageToClaude, isApiKeyConfigured } from '../services/anthropicService';
 
 export default function ChatScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
@@ -33,9 +35,20 @@ export default function ChatScreen({ navigation }) {
   const sendMessage = async () => {
     if (inputText.trim() === '') return;
 
+    // Check if API key is configured
+    if (!isApiKeyConfigured()) {
+      Alert.alert(
+        'API Key Required',
+        'Please set your ANTHROPIC_API_KEY environment variable to use the chat feature.',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+
+    const userMessageText = inputText.trim();
     const userMessage = {
       id: Date.now().toString(),
-      text: inputText,
+      text: userMessageText,
       sender: 'user',
       timestamp: new Date(),
     };
@@ -44,46 +57,31 @@ export default function ChatScreen({ navigation }) {
     setInputText('');
     setIsLoading(true);
 
-    // TODO: Replace this with your actual AI API call
-    // Example: OpenAI, Anthropic Claude, or any other AI service
     try {
-      // Simulated AI response - replace with actual API call
-      setTimeout(() => {
-        const aiMessage = {
-          id: (Date.now() + 1).toString(),
-          text: 'This is a placeholder AI response. Connect your AI service here!',
-          sender: 'ai',
-          timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, aiMessage]);
-        setIsLoading(false);
-      }, 1000);
+      // Call Anthropic API
+      const responseText = await sendMessageToClaude(messages, userMessageText);
 
-      /* Example API integration (uncomment and configure):
-      const response = await fetch('YOUR_AI_API_ENDPOINT', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer YOUR_API_KEY',
-        },
-        body: JSON.stringify({
-          message: inputText,
-        }),
-      });
-
-      const data = await response.json();
       const aiMessage = {
         id: (Date.now() + 1).toString(),
-        text: data.response,
+        text: responseText,
         sender: 'ai',
         timestamp: new Date(),
       };
+
       setMessages((prev) => [...prev, aiMessage]);
       setIsLoading(false);
-      */
     } catch (error) {
       console.error('Error sending message:', error);
       setIsLoading(false);
+
+      // Show error to user
+      const errorMessage = {
+        id: (Date.now() + 1).toString(),
+        text: `Sorry, I encountered an error: ${error.message}`,
+        sender: 'ai',
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
     }
   };
 
