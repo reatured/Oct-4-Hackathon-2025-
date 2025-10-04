@@ -1,0 +1,13 @@
+CuraLoop - Demo Links
+
+Frontend Application:
+https://chatbot-app-three-beta.vercel.app/
+
+Backend API:
+https://curaloop-backend-gdy23nv13-reatureds-projects.vercel.app
+
+API Documentation:
+https://curaloop-backend-gdy23nv13-reatureds-projects.vercel.app/docs
+
+Demo Video:
+[TODO: Add demo video link or replace this file with demo.mp4 before submission]
