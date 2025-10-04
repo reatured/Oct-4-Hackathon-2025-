@@ -5,7 +5,10 @@
       "Bash(npx expo start:*)",
       "Bash(npx expo install:*)",
       "Bash(npm run build:*)",
-      "Bash(vercel:*)"
+      "Bash(vercel:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []

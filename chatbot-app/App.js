@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
-  StyleSheet,
   View,
   Text,
   TextInput,
@@ -10,6 +9,7 @@ import {
   Platform,
   SafeAreaView,
 } from 'react-native';
+import { styles } from './styles';
 
 export default function App() {
   const [messages, setMessages] = useState([]);
@@ -88,16 +88,20 @@ export default function App() {
         item.sender === 'user' ? styles.userMessage : styles.aiMessage,
       ]}
     >
-      <Text style={[
-        styles.messageText,
-        item.sender === 'user' && styles.userMessageText
-      ]}>
+      <Text
+        style={[
+          styles.messageText,
+          item.sender === 'user' && styles.userMessageText,
+        ]}
+      >
         {item.text}
       </Text>
-      <Text style={[
-        styles.timestamp,
-        item.sender === 'user' && styles.userTimestamp
-      ]}>
+      <Text
+        style={[
+          styles.timestamp,
+          item.sender === 'user' && styles.userTimestamp,
+        ]}
+      >
         {item.timestamp.toLocaleTimeString([], {
           hour: '2-digit',
           minute: '2-digit',
@@ -155,7 +159,10 @@ export default function App() {
             }}
           />
           <TouchableOpacity
-            style={[styles.sendButton, !inputText.trim() && styles.sendButtonDisabled]}
+            style={[
+              styles.sendButton,
+              (!inputText.trim() || isLoading) && styles.sendButtonDisabled,
+            ]}
             onPress={sendMessage}
             disabled={!inputText.trim() || isLoading}
           >
@@ -166,119 +173,3 @@ export default function App() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  header: {
-    backgroundColor: '#007AFF',
-    padding: 16,
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-  },
-  headerText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  versionText: {
-    fontSize: 12,
-    color: '#fff',
-    opacity: 0.8,
-    marginTop: 4,
-  },
-  keyboardView: {
-    flex: 1,
-  },
-  messagesList: {
-    padding: 16,
-    flexGrow: 1,
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 100,
-  },
-  emptyText: {
-    fontSize: 16,
-    color: '#999',
-  },
-  messageContainer: {
-    maxWidth: '80%',
-    padding: 12,
-    borderRadius: 16,
-    marginBottom: 12,
-  },
-  userMessage: {
-    alignSelf: 'flex-end',
-    backgroundColor: '#007AFF',
-  },
-  aiMessage: {
-    alignSelf: 'flex-start',
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-  },
-  messageText: {
-    fontSize: 16,
-    color: '#000',
-  },
-  userMessageText: {
-    color: '#fff',
-  },
-  timestamp: {
-    fontSize: 10,
-    marginTop: 4,
-    opacity: 0.7,
-    color: '#666',
-  },
-  userTimestamp: {
-    color: '#fff',
-  },
-  loadingContainer: {
-    padding: 8,
-    paddingLeft: 16,
-  },
-  loadingText: {
-    fontSize: 14,
-    color: '#666',
-    fontStyle: 'italic',
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    padding: 12,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-    alignItems: 'flex-end',
-  },
-  input: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    fontSize: 16,
-    maxHeight: 100,
-    marginRight: 8,
-  },
-  sendButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 20,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    justifyContent: 'center',
-  },
-  sendButtonDisabled: {
-    backgroundColor: '#ccc',
-  },
-  sendButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-});
