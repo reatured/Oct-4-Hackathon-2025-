@@ -130,11 +130,8 @@ class DiagnosisTreatmentPlanner:
         # Generate diagnosis analysis
         diagnosis_analysis = self._generate_diagnosis_analysis(patient_data, prediction_result, risk_level)
         
-        # Generate chatbot config - use original version if no LLM, enhanced version if LLM available
-        if use_llm:
-            chatbot_config = self._generate_chatbot_config(patient_data, prediction_result, risk_level, treatment_plan)
-        else:
-            chatbot_config = self._generate_original_chatbot_config(patient_data, prediction_result, risk_level)
+        # Generate chatbot config - always use full config that includes treatment execution
+        chatbot_config = self._generate_chatbot_config(patient_data, prediction_result, risk_level, treatment_plan)
         
         return {
             "patient_portfolio": self._generate_patient_portfolio(patient_data),

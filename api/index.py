@@ -13,6 +13,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 # Import only the router from analysis (not the full app)
 from app.analysis.diagnosis_treatment_planning import router as analysis_router
+from app.analysis.conversation_analyzer import router as conversation_router
 
 # For intake, we need to import the router without triggering app creation
 # Import the intake module's router directly
@@ -22,6 +23,13 @@ intake_module = importlib.util.module_from_spec(spec)
 sys.modules['intake'] = intake_module
 spec.loader.exec_module(intake_module)
 intake_router = intake_module.router
+
+# Import the regular_chat module's router
+spec_chat = importlib.util.spec_from_file_location("regular_chat", os.path.join(os.path.dirname(__file__), '..', 'app', 'patient', 'regular_chat.py'))
+chat_module = importlib.util.module_from_spec(spec_chat)
+sys.modules['regular_chat'] = chat_module
+spec_chat.loader.exec_module(chat_module)
+chat_router = chat_module.router
 
 # Create FastAPI application
 app = FastAPI(
@@ -41,7 +49,9 @@ app.add_middleware(
 
 # Include routers
 app.include_router(analysis_router)
+app.include_router(conversation_router)
 app.include_router(intake_router)
+app.include_router(chat_router)
 
 # Root endpoint
 @app.get("/")
@@ -51,8 +61,11 @@ async def root():
         "version": "1.0.0",
         "status": "healthy",
         "endpoints": {
-            "analysis": "/api/analysis",
-            "patient_intake": "/api/patient",
+            "diagnosis_analysis": "/api/analysis",
+            "conversation_analysis": "/api/conversation",
+            "patient_intake": "/api/patient/{patient_id}/intake",
+            "chatbot_initialization": "/api/patient/{patient_id}/chatbot/initialize",
+            "chat_sessions": "/api/patient/{patient_id}/chat",
             "docs": "/docs",
             "openapi": "/openapi.json"
         }
