@@ -140,8 +140,20 @@ Doctor Contact Decision + Recommendations
 
 ## 🔑 Environment Variables
 
-Optional but recommended:
-- `ANTHROPIC_API_KEY` - For conversation analysis (can also provide per request)
+**Required for LLM features:**
+- `CLAUDE_API_KEY` - Claude API key for diagnosis planning and conversation analysis
+- `ANTHROPIC_API_KEY` - Alternative name (also supported)
+
+**How to set:**
+```bash
+# Option 1: Set in .env file (recommended)
+echo "CLAUDE_API_KEY=your-key-here" > .env
+
+# Option 2: Export in shell
+export CLAUDE_API_KEY=sk-ant-api03-...
+
+# Option 3: Provide per request in API call
+```
 
 ## 📝 Notes
 
