@@ -4,7 +4,7 @@
 
 ## 🚀 [Live Demo](https://chatbot-app-three-beta.vercel.app/) | 🎨 [Figma Prototype](https://www.figma.com/proto/XGro7XTeI2EzELNBFHtxxY/CureLoop?page-id=2%3A62890&node-id=26-47618&viewport=30%2C59%2C0.68&t=PDfkUrLqbO3Vky0e-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=26%3A47618) | 📊 [Presentation](https://docs.google.com/presentation/d/1qPf1uS1MDLKFYb0oUSKL2o60Z8AA-5RfOHpdXbYuUfU/edit?usp=sharing)
 
-**[Frontend Application](https://chatbot-app-three-beta.vercel.app/)**
+**[Frontend Application (Mobile)](https://chatbot-app-three-beta.vercel.app/)**
 
 **[Backend API](https://curaloop-backend-gdy23nv13-reatureds-projects.vercel.app)**
 - [API Documentation](https://curaloop-backend-gdy23nv13-reatureds-projects.vercel.app/docs)
